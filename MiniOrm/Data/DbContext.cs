@@ -1,5 +1,7 @@
-﻿using Npgsql;
+﻿using MiniOrm.Data.Metadata;
+using Npgsql;
 using System.Reflection;
+using System.Text.Json;
 
 namespace MiniOrm.Data;
 
@@ -15,11 +17,16 @@ public class DbContext
 {
     private readonly string _dbConnectionString;
     private NpgsqlConnection? _connection;
+    private readonly ModelMetadata _model;
 
     public DbContext(string dbConnectionString)
     {
         _dbConnectionString = dbConnectionString;
         InitializeDbsets();
+        _model = MetadataProvider.GetModel(GetType());
+
+        var obj = JsonSerializer.Serialize(_model);
+        Console.WriteLine(obj);
     }
 
     /// <summary>

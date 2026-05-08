@@ -11,59 +11,57 @@ public class TypeMapper
         if (clrType == null)
             return null!;
 
-        var type = Nullable.GetUnderlyingType(clrType);
-
-        if (type == typeof(int))
+        if (clrType == typeof(int))
             return new DataBaseType("INT", false);
 
-        if (type == typeof(int?))
+        if (clrType == typeof(int?))
             return new DataBaseType("INT", true);
 
-        if (type == typeof(long))
+        if (clrType == typeof(long))
             return new DataBaseType("BIGINT", false);
 
-        if (type == typeof(long?))
+        if (clrType == typeof(long?))
             return new DataBaseType("BIGINT", true);
 
-        if (type == typeof(float))
+        if (clrType == typeof(float))
             return new DataBaseType("REAL", false);
 
-        if (type == typeof(float?))
+        if (clrType == typeof(float?))
             return new DataBaseType("REAL", true);
 
-        if (type == typeof(double?))
+        if (clrType == typeof(double?))
             return new DataBaseType("DOUBLE PRECISION", true);
 
-        if (type == typeof(double))
+        if (clrType == typeof(double))
             return new DataBaseType("DOUBLE PRECISION", false);
 
-        if (type == typeof(decimal?))
+        if (clrType == typeof(decimal?))
             return new DataBaseType("NUMERIC", true);
 
-        if (type == typeof(decimal))
+        if (clrType == typeof(decimal))
             return new DataBaseType("NUMERIC", false);
 
-        if (type == typeof(bool))
+        if (clrType == typeof(bool))
             return new DataBaseType("BOOLEAN", false);
 
-        if (type == typeof(bool?))
+        if (clrType == typeof(bool?))
             return new DataBaseType("BOOLEAN", true);
 
-        if (type == typeof(DateTime?))
+        if (clrType == typeof(DateTime?))
             return new DataBaseType("TIMESTAMP", true);
 
-        if (type == typeof(DateTime))
+        if (clrType == typeof(DateTime))
             return new DataBaseType("TIMESTAMP", false);
 
-        if (type == typeof(Guid?))
+        if (clrType == typeof(Guid?))
             return new DataBaseType("UUID", true);
 
-        if (type == typeof(Guid))
+        if (clrType == typeof(Guid))
             return new DataBaseType("UUID", false);
 
         if (!clrType.IsValueType)
         {
-            if (type == typeof(string))
+            if (clrType == typeof(string))
                 return new DataBaseType("TEXT", false);
             else
                 return new DataBaseType("TEXT", true);

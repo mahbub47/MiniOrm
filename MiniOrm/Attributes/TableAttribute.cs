@@ -7,9 +7,9 @@ namespace MiniOrm.Attributes;
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public class TableAttribute : Attribute
 {
-    public string? TableName { get; set; }
+    public string? Name { get; set; }
     public TableAttribute(string? Name = null)
     {
-        TableName = Name;
+        this.Name = Name;
     }
 }

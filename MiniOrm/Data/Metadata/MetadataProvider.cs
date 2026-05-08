@@ -4,14 +4,21 @@ using System.Text;
 
 namespace MiniOrm.Data.Metadata;
 
-public class MetadataProvider
+public static class MetadataProvider
 {
-    private readonly Dictionary<Type, ModelMetadata> _models;
+    private static readonly Dictionary<Type, ModelMetadata> _cache = new();
 
-    private readonly MetadataBuilder _builder;
+    private static readonly MetadataBuilder _builder = new();
 
-    public MetadataProvider()
+    public static ModelMetadata GetModel(Type contextType)
     {
-        _builder = new MetadataBuilder();
+        if (_cache.TryGetValue(contextType, out var model))
+        {
+            return model;
+        }
+
+        model = _builder.Build(contextType);
+        _cache[contextType] = model;
+        return model;
     }
 }

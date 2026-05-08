@@ -7,12 +7,12 @@ namespace MiniOrm.Attributes;
 [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
 public class ColumnAttribute : Attribute
 {
-    public string? ColumnName { get; set; }
-    public string? DbDataType { get; set; }
+    public string? Name { get; set; }
+    public string? DataBaseType { get; set; }
 
-    public ColumnAttribute(string? Name = null, string? DataType = null)
+    public ColumnAttribute(string? Name = null, string? DataBaseType = null)
     {
-        ColumnName = Name;
-        DbDataType = DataType;
+        this.Name = Name;
+        this.DataBaseType = DataBaseType;
     }
 }
