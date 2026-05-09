@@ -39,5 +39,9 @@ public class PropertyMetadata
     /// IsNullable indicates whether the property can accept null values. 
     /// This information is important for understanding the constraints of the property in the database schema,
     /// </summary>
+<<<<<<< HEAD
+    public string? Nullable { get; set; }
+=======
     public bool IsNullable { get; set; }
+>>>>>>> 29067a9aad8df6c51a3f6159891f75b78f3dba8d
 }

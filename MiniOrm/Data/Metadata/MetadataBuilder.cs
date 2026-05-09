@@ -64,7 +64,7 @@ public class MetadataBuilder
                 ClrType = property.PropertyType.GetType(),
                 DatabaseType = databaseType.DatabaseType,
                 IsPrimaryKey = CheckPrimaryKey(property),
-                IsNullable = databaseType.IsNullable
+                Nullable = databaseType.Nullable
             };
             entity.Properties?.Add(Property);
         }
