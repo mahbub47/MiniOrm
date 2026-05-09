@@ -12,59 +12,59 @@ public class TypeMapper
             return null!;
 
         if (clrType == typeof(int))
-            return new DataBaseType("INT", false);
+            return new DataBaseType("INT", "NOT NULL");
 
         if (clrType == typeof(int?))
-            return new DataBaseType("INT", true);
+            return new DataBaseType("INT", "NULL");
 
         if (clrType == typeof(long))
-            return new DataBaseType("BIGINT", false);
+            return new DataBaseType("BIGINT", "NOT NULL");
 
         if (clrType == typeof(long?))
-            return new DataBaseType("BIGINT", true);
+            return new DataBaseType("BIGINT", "NULL");
 
         if (clrType == typeof(float))
-            return new DataBaseType("REAL", false);
+            return new DataBaseType("REAL", "NOT NULL");
 
         if (clrType == typeof(float?))
-            return new DataBaseType("REAL", true);
+            return new DataBaseType("REAL", "NULL");
 
         if (clrType == typeof(double?))
-            return new DataBaseType("DOUBLE PRECISION", true);
+            return new DataBaseType("DOUBLE PRECISION", "NULL");
 
         if (clrType == typeof(double))
-            return new DataBaseType("DOUBLE PRECISION", false);
+            return new DataBaseType("DOUBLE PRECISION", "NOT NULL");
 
         if (clrType == typeof(decimal?))
-            return new DataBaseType("NUMERIC", true);
+            return new DataBaseType("NUMERIC", "NULL");
 
         if (clrType == typeof(decimal))
-            return new DataBaseType("NUMERIC", false);
+            return new DataBaseType("NUMERIC", "NOT NULL");
 
         if (clrType == typeof(bool))
-            return new DataBaseType("BOOLEAN", false);
+            return new DataBaseType("BOOLEAN", "NOT NULL");
 
         if (clrType == typeof(bool?))
-            return new DataBaseType("BOOLEAN", true);
+            return new DataBaseType("BOOLEAN", "NULL");
 
         if (clrType == typeof(DateTime?))
-            return new DataBaseType("TIMESTAMP", true);
+            return new DataBaseType("TIMESTAMP", "NULL");
 
         if (clrType == typeof(DateTime))
-            return new DataBaseType("TIMESTAMP", false);
+            return new DataBaseType("TIMESTAMP", "NOT NULL");
 
         if (clrType == typeof(Guid?))
-            return new DataBaseType("UUID", true);
+            return new DataBaseType("UUID", "NULL");
 
         if (clrType == typeof(Guid))
-            return new DataBaseType("UUID", false);
+            return new DataBaseType("UUID", "NOT NULL");
 
         if (!clrType.IsValueType)
         {
             if (clrType == typeof(string))
-                return new DataBaseType("TEXT", false);
+                return new DataBaseType("TEXT", "NOT NULL");
             else
-                return new DataBaseType("TEXT", true);
+                return new DataBaseType("TEXT", "NULL");
         }
 
         return null!;
@@ -74,11 +74,11 @@ public class TypeMapper
 public class DataBaseType
 {
     public string? DatabaseType { get; set; }
-    public bool IsNullable { get; set; }
+    public string? Nullable { get; set; }
 
-    public DataBaseType(string databaseType, bool isNullable)
+    public DataBaseType(string databaseType, string nullable)
     {
         DatabaseType = databaseType;
-        IsNullable = isNullable;
+        Nullable = nullable;
     }
 }
