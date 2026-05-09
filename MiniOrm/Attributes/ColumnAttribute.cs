@@ -1,9 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace MiniOrm.Attributes;
 
-namespace MiniOrm.Attributes;
-
+/// <summary>
+/// Specifies the mapping between a class property and a database column for use with object-relational mapping
+/// frameworks.
+/// </summary>
+/// <remarks>Apply this attribute to a property to customize the column name or database type used when persisting
+/// the property to a database. This attribute is typically used in data access scenarios to override default mapping
+/// conventions.</remarks>
 [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
 public class ColumnAttribute : Attribute
 {

@@ -54,7 +54,8 @@ public class DiffEngine
         return upOperations;
     }
 
-    // Generates a list of migration operations needed to revert the changes made by the "up" operations. This is used for rolling back migrations if needed.
+    // Generates a list of migration operations needed to revert the changes made by the "up" operations.
+    // This is used for rolling back migrations if needed.
     public List<MigrationOperation> GetDownOperations(List<MigrationOperation> ups)
     {
         var downOperations = new List<MigrationOperation>();

@@ -1,9 +1,4 @@
-﻿
-<<<<<<< Updated upstream
-=======
-using MiniOrm.Data.Metadata;
-using MiniOrm.Migrations.Commands;
-using System.Text.Json;
+﻿using MiniOrm.Migrations.Commands;
 
 public class Program
 {
@@ -13,4 +8,3 @@ public class Program
         runner.Run(args);
     }
 }
->>>>>>> Stashed changes

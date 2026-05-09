@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace MiniOrm.Data;
 
-namespace MiniOrm.Data;
-
+/// <summary>
+/// This class is responsible for mapping CLR types to corresponding database types. 
+/// It provides a method to map a given CLR type to a database type, which includes the database type name and whether the type is nullable. 
+/// This mapping is essential for generating SQL commands and defining database schemas based on the properties of entity classes in the application.
+/// </summary>
 public class TypeMapper
 {
     public DataBaseType Map(Type clrType)
@@ -71,6 +72,10 @@ public class TypeMapper
     }
 }
 
+/// <summary>
+/// This class represents the database type information for a given CLR type. 
+/// It includes the database type name and a flag indicating whether the type is nullable.
+/// </summary>
 public class DataBaseType
 {
     public string? DatabaseType { get; set; }
