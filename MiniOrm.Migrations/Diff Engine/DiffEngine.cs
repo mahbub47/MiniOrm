@@ -1,4 +1,5 @@
 ﻿using MiniOrm.Data.Metadata;
+using MiniOrm.Helper;
 using MiniOrm.Migrations.Diff_Engine.Operations;
 using System.Text.Json;
 
@@ -10,12 +11,38 @@ namespace MiniOrm.Migrations.Diff_Engine;
 /// </summary>
 public class DiffEngine
 {
+    private readonly string _snapshotDir;
+
+    public DiffEngine()
+    {
+        var projectRoot = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", ".."));
+        _snapshotDir = Path.Combine(projectRoot, "Snapshot/model_snapshot.json");
+    }
+    
+    public void UpdateSnapshot()
+    {
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            Converters = { new TypeConverter() }
+        };
+
+        var currentModel = MetadataProvider.GetModel(typeof(AppDbContext));
+
+        string snapshotContent = JsonSerializer.Serialize(currentModel, options);
+
+        File.WriteAllText(_snapshotDir, snapshotContent);
+    }
+
     // Retrieves the snapshot model metadata from a JSON file. The snapshot represents the state of the model at the time of the last migration.
     private ModelMetadata GetSnapshotModel()
     {
-        string projectRoot = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", ".."));
-        string snapshotDir = Path.Combine(projectRoot, "Snapshot/model_snapshot.json");
-        string json = File.ReadAllText(snapshotDir);
+        if(!File.Exists(_snapshotDir))
+        {
+            return new ModelMetadata();
+        }
+
+        string json = File.ReadAllText(_snapshotDir);
         ModelMetadata snapshotModel = JsonSerializer.Deserialize<ModelMetadata>(json)!;
         return snapshotModel;
     }

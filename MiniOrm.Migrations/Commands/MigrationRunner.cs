@@ -99,6 +99,9 @@ public class MigrationRunner
         _sqlGenerator.GenerateSql(downOperations, sb);
 
         File.WriteAllText(filePath, sb.ToString());
+
+        _diffEngine.UpdateSnapshot();
+
         Console.WriteLine($"Migration created: {fileName}");
         Console.WriteLine($"Location: {filePath}");
     }

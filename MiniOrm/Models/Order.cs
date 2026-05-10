@@ -17,4 +17,7 @@ public class Order
 
     [Column]
     public int Quantity { get; set; }
+
+    [Column]
+    public DateTime? OrderDate { get; set; }
 }
