@@ -40,27 +40,32 @@ public class MigrationRunner
             Console.WriteLine("command not found run `dotnet run -- help` ");
             return;
         }
-
-        if (args.Length == 1 && args[0] == "help")
+        else if (args.Length == 1 && args[0] == "help")
         {
             Help();
             return;
         }
-
-        if (args.Length == 2)
+        else if (args.Length == 2)
         {
             if (args[0] == "migrations" && args[1] == "apply")
             {
                 await ApplyMigrations();
             }
-
-            if(args[0] == "migrations" && args[1] == "list")
+            else if(args[0] == "migrations" && args[1] == "list")
             {
                 await MigrationList();
             }
+            else if (args[0] == "migrations" && args[1] == "rollback")
+            {
+                await MigrationRollback();
+            }
+            else
+            {
+                Console.WriteLine("command not found run `dotnet run -- help` ");
+                return;
+            }
         }
-
-        if (args.Length == 3)
+        else if (args.Length == 3)
         {
             if (args[0] == "migrations" && args[1] == "add")
             {
@@ -73,6 +78,11 @@ public class MigrationRunner
                 Console.WriteLine("command not found run `dotnet run -- help` ");
                 return;
             }
+        }
+        else
+        {
+            Console.WriteLine("command not found run `dotnet run -- help` ");
+            return;
         }
     }
 
@@ -119,6 +129,10 @@ public class MigrationRunner
         Console.WriteLine($"Location: {filePath}");
     }
 
+    /// <summary>
+    /// This method applies all pending migrations by executing the "up" SQL scripts of the migration files that have not been applied yet.
+    /// </summary>
+    /// <returns></returns>
     private async Task ApplyMigrations()
     {
         await _sqlManager.CreateMigrationTable();
@@ -149,6 +163,11 @@ public class MigrationRunner
         Console.WriteLine(count == 0 ? "No migrations applied" : $"{count} migration(s) applied");
     }
 
+    /// <summary>
+    /// This method lists all migration files in the "Migrations" directory and indicates whether 
+    /// each migration has been applied or is still pending based on the records in the database.
+    /// </summary>
+    /// <returns></returns>
     private async Task MigrationList()
     {
         var appliedMigrations = await _sqlManager.GetAppliedMigrations();
@@ -163,6 +182,41 @@ public class MigrationRunner
         }
     }
 
+    /// <summary>
+    /// This method rolls back the last applied migration by executing the "down" SQL script of the most recently applied migration file.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    private async Task MigrationRollback()
+    {
+        var lastAppliedMigration = await _sqlManager.GetLastAppliedMigration();
+
+        if (string.IsNullOrEmpty(lastAppliedMigration))
+            throw new InvalidOperationException("No applied migration to rollback");
+
+        var localMigrationFiles = GetLocalMigrations();
+
+        foreach (var file in localMigrationFiles)
+        {
+            var name = Path.GetFileNameWithoutExtension(file);
+            if (name != lastAppliedMigration) continue;
+
+            Console.WriteLine($"Rollback {name}...");
+            var content = File.ReadAllText(file);
+
+            await _sqlManager.ExecuteDownAsync(content);
+
+            await _sqlManager.RollbackMigrationAsync(name);
+
+            Console.WriteLine($"Rollback to {name}.");
+        }
+    }
+
+    /// <summary>
+    /// This method retrieves all migration files from the "Migrations" directory, orders them by their names (which include timestamps), and returns the list of file paths.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="FileNotFoundException"></exception>
     private IEnumerable<string> GetLocalMigrations()
     {
         var localFiles = Directory.GetFiles(_migrationDir, "*.sql").OrderBy(f => f);

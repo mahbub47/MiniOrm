@@ -44,6 +44,14 @@ public class SqlExecutor
         return set;
     }
 
+    public async Task<string> GetLastMigrationAsync(string sql)
+    {
+        using var conn = new NpgsqlConnection(_connectionString);
+        await conn.OpenAsync();
+        using var cmd = new NpgsqlCommand(sql, conn);
+        return await cmd.ExecuteScalarAsync() as string ?? "";
+    }
+
     public async Task InsertMigrationAsync(string name)
     {
         using var conn = new NpgsqlConnection(_connectionString);
@@ -56,6 +64,21 @@ public class SqlExecutor
         record.Parameters.AddWithValue("@n", name);
         record.Parameters.AddWithValue("@t", DateTime.UtcNow);
 
-        record.ExecuteNonQuery();
+        await record.ExecuteNonQueryAsync();
     }
+
+    public async Task DeleteMigrationAsync(string name)
+    {
+        using var conn = new NpgsqlConnection(_connectionString);
+
+        await conn.OpenAsync();
+
+        using var record = new NpgsqlCommand(
+                "DELETE FROM __migrations WHERE name = @n;", conn);
+
+        record.Parameters.AddWithValue("@n", name);
+
+        await record.ExecuteNonQueryAsync();
+    }
+    
 }
