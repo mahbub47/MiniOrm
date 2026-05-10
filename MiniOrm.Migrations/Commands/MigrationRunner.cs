@@ -35,41 +35,45 @@ public class MigrationRunner
     /// <param name="args"></param>
     public async Task Run(string[] args)
     {
-        //if (args.Length == 0)
-        //{
-        //    Console.WriteLine("command not found run `dotnet run -- help` ");
-        //    return;
-        //}
+        if (args.Length == 0)
+        {
+            Console.WriteLine("command not found run `dotnet run -- help` ");
+            return;
+        }
 
-        //if (args.Length == 1 && args[0] == "help")
-        //{
-        //    Help();
-        //    return;
-        //}
+        if (args.Length == 1 && args[0] == "help")
+        {
+            Help();
+            return;
+        }
 
-        //if (args.Length == 2)
-        //{
-        //    if (args[0] == "migrations" && args[1] == "apply")
-        //    {
-        //        await ApplyMigrations();
-        //    }
-        //}
+        if (args.Length == 2)
+        {
+            if (args[0] == "migrations" && args[1] == "apply")
+            {
+                await ApplyMigrations();
+            }
 
-        //if (args.Length == 3)
-        //{
-        //    if (args[0] == "migrations" && args[1] == "add")
-        //    {
-        //        var fileName = args[2];
-        //        AddMigration(fileName);
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("command not found run `dotnet run -- help` ");
-        //        return;
-        //    }
-        //}
-        await ApplyMigrations();
+            if(args[0] == "migrations" && args[1] == "list")
+            {
+                await MigrationList();
+            }
+        }
+
+        if (args.Length == 3)
+        {
+            if (args[0] == "migrations" && args[1] == "add")
+            {
+                var fileName = args[2];
+                AddMigration(fileName);
+                return;
+            }
+            else
+            {
+                Console.WriteLine("command not found run `dotnet run -- help` ");
+                return;
+            }
+        }
     }
 
     // Displays the available migration commands and their usage instructions to the console.
@@ -143,6 +147,20 @@ public class MigrationRunner
         }
 
         Console.WriteLine(count == 0 ? "No migrations applied" : $"{count} migration(s) applied");
+    }
+
+    private async Task MigrationList()
+    {
+        var appliedMigrations = await _sqlManager.GetAppliedMigrations();
+        var localMigrationFiles = GetLocalMigrations();
+        foreach(var file in localMigrationFiles)
+        {
+            string name = Path.GetFileNameWithoutExtension(file);
+            var isApplied = appliedMigrations.Contains(name);
+            Console.Write(isApplied ? "[Applied]" : "[Pending]");
+            Console.Write($" {name}");
+            Console.WriteLine();
+        }
     }
 
     private IEnumerable<string> GetLocalMigrations()
