@@ -484,3 +484,6 @@ $RECYCLE.BIN/
 
 # Sql files
 *.sql
+
+# Snapshot files
+model_snapshot.json
