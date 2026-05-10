@@ -1,3 +1,77 @@
 {
-
+  "Entities": [
+    {
+      "Name": "Products",
+      "Properties": [
+        {
+          "Name": "ProductId",
+          "ClrType": "System.RuntimeType, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "DatabaseType": "INT",
+          "IsPrimaryKey": true,
+          "Nullable": "NOT NULL"
+        },
+        {
+          "Name": "ProductName",
+          "ClrType": "System.RuntimeType, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "DatabaseType": "TEXT",
+          "IsPrimaryKey": false,
+          "Nullable": "NOT NULL"
+        },
+        {
+          "Name": "Price",
+          "ClrType": "System.RuntimeType, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "DatabaseType": "NUMERIC",
+          "IsPrimaryKey": false,
+          "Nullable": "NOT NULL"
+        },
+        {
+          "Name": "Discount",
+          "ClrType": "System.RuntimeType, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "DatabaseType": "NUMERIC",
+          "IsPrimaryKey": false,
+          "Nullable": "NULL"
+        },
+        {
+          "Name": "InStock",
+          "ClrType": "System.RuntimeType, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "DatabaseType": "BOOLEAN",
+          "IsPrimaryKey": false,
+          "Nullable": "NOT NULL"
+        }
+      ]
+    },
+    {
+      "Name": "MyOrders",
+      "Properties": [
+        {
+          "Name": "OrderId",
+          "ClrType": "System.RuntimeType, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "DatabaseType": "INT",
+          "IsPrimaryKey": true,
+          "Nullable": "NOT NULL"
+        },
+        {
+          "Name": "ProductId",
+          "ClrType": "System.RuntimeType, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "DatabaseType": "INT",
+          "IsPrimaryKey": false,
+          "Nullable": "NOT NULL"
+        },
+        {
+          "Name": "Quantity",
+          "ClrType": "System.RuntimeType, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "DatabaseType": "INT",
+          "IsPrimaryKey": false,
+          "Nullable": "NOT NULL"
+        },
+        {
+          "Name": "OrderDate",
+          "ClrType": "System.RuntimeType, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+          "DatabaseType": "TIMESTAMP",
+          "IsPrimaryKey": false,
+          "Nullable": "NULL"
+        }
+      ]
+    }
+  ]
 }
