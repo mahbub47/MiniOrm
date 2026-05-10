@@ -56,6 +56,12 @@ public class SqlManager
         return list;
     }
 
+    public async Task<string> GetLastAppliedMigration()
+    {
+        string sql = "SELECT name FROM __migrations ORDER BY applied_at DESC LIMIT 1";
+        return await _executor.GetLastMigrationAsync(sql);
+    }
+
     public async Task CreateMigrationTable()
     {
         string sql = """
@@ -83,7 +89,11 @@ public class SqlManager
     public async Task UploadMigrationAsync(string name)
     {
         await _executor.InsertMigrationAsync(name);
-        
+    }
+
+    public async Task RollbackMigrationAsync(string name)
+    {
+        await _executor.DeleteMigrationAsync(name);
     }
 
     private static string ExtractSection(string? content, string section)
