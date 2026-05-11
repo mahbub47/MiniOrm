@@ -15,3 +15,5 @@ var context = new AppDbContext("Host=localhost;Username=postgres;Password=MyPGSe
 //var result = await context.Products!.FindByIdAsync(1);
 
 //Console.WriteLine($"Id: {result.Id}, ProductName: {result.Name}, Price: {result.Price}, Discount: {result.Discount}, IsAvailable: {result.InStock}");
+
+//var result = await context.Products!.GetAllAsync();

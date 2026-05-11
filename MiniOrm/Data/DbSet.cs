@@ -70,7 +70,7 @@ public class DbSet<TEntity>(DbContext context) where TEntity : new()
         using var cmd = new NpgsqlCommand(sql, conn);
         cmd.Parameters.AddWithValue("id", id);
 
-        var reader = await cmd.ExecuteReaderAsync() ?? throw new InvalidOperationException(sql);
+        var reader = await cmd.ExecuteReaderAsync();
         if (!reader.Read()) return default!;
 
         var entity = new TEntity();
@@ -94,5 +94,49 @@ public class DbSet<TEntity>(DbContext context) where TEntity : new()
         }
 
         return entity;
+    }
+
+    public async Task<IEnumerable<TEntity>> GetAllAsync()
+    {
+        using var conn = context.GetConnection();
+
+        await conn.OpenAsync();
+
+        var metadata = context.GetEntityMetadata(typeof(TEntity));
+
+        string sql = $"SELECT * FROM {metadata.Name}";
+
+        using var cmd = new NpgsqlCommand(sql, conn);
+
+        var reader = await cmd.ExecuteReaderAsync();
+
+        var entities = new List<TEntity>();
+
+        while (reader.Read())
+        {
+            var entity = new TEntity();
+
+            foreach (var col in metadata.Properties!)
+            {
+                var propInfo = typeof(TEntity).GetProperties()
+                    .FirstOrDefault(p => p.GetCustomAttribute<ColumnAttribute>()!.Name == col.Name || p.Name == col.Name);
+
+                var ordinal = reader.GetOrdinal(col.Name!);
+
+                if (reader.IsDBNull(ordinal))
+                {
+                    propInfo!.SetValue(entity, null);
+                }
+                else
+                {
+                    var value = reader.GetValue(ordinal);
+                    propInfo!.SetValue(entity, Convert.ChangeType(value, col.ClrType!));
+                }
+            }
+
+            entities.Add(entity);
+        }
+
+        return entities;
     }
 }
