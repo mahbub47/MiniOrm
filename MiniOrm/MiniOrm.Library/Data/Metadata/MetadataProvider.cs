@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MiniOrm.Data.Metadata;
+﻿namespace MiniOrm.MiniOrm.Library.Data.Metadata;
 
 /// <summary>
 /// This class serves as a provider for metadata information about a given context type. 

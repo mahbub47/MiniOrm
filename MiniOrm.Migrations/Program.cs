@@ -1,4 +1,4 @@
-﻿using MiniOrm.Migrations.Commands;
+﻿using MiniOrm.Migrations.MiniOrm.Migrations.Library.Commands;
 
 public class Program
 {

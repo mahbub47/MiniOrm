@@ -1,8 +1,8 @@
-﻿using MiniOrm.Data.Metadata;
+﻿using MiniOrm.MiniOrm.Library.Data.Metadata;
 using Npgsql;
 using System.Reflection;
 
-namespace MiniOrm.Data;
+namespace MiniOrm.MiniOrm.Library.Data;
 
 /// <summary>
 /// Represents a session with the database, providing access to entity sets and managing the underlying database

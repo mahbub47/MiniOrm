@@ -1,7 +1,7 @@
-﻿using MiniOrm.Attributes;
+﻿using MiniOrm.MiniOrm.Library.Attributes;
 using System.Reflection;
 
-namespace MiniOrm.Data.Metadata;
+namespace MiniOrm.MiniOrm.Library.Data.Metadata;
 
 /// <summary>
 /// This class is responsible for building metadata information for a given context type. 

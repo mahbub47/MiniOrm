@@ -1,10 +1,7 @@
 ﻿using MiniOrm.Migrations.Diff_Engine.Operations;
-using System;
-using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using System.Text;
 
-namespace MiniOrm.Migrations.Sql_Generator;
+namespace MiniOrm.Migrations.MiniOrm.Migrations.Library.Database;
 
 /// <summary>
 /// This class is responsible for generating SQL scripts based on a list of migration operations.

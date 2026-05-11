@@ -1,16 +1,18 @@
 ﻿
 using MiniOrm.Models;
 
-var context = new AppDbContext("Host=localhost;Username=postgres;Password=MyPGServer;Database=miniOrm");
+var connectionString = Environment.GetEnvironmentVariable("MINIORM_CONN");
+var context = new AppDbContext(connectionString!);
 
-//var newProduct = new Product
-//{
-//    Name = "Test Product",
-//    Price = 500m,
-//    InStock = true
-//};
+var newProduct = new Product
+{
+    Name = "Test Product 1",
+    Price = 500m,
+    InStock = true
+}
+;
 
-//var result = await context.Products!.InsertAsync(newProduct);
+var result = await context.Products!.InsertAsync(newProduct);
 
 //var result = await context.Products!.FindByIdAsync(1);
 

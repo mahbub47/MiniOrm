@@ -1,4 +1,4 @@
-﻿namespace MiniOrm.Data;
+﻿namespace MiniOrm.MiniOrm.Library.Data;
 
 /// <summary>
 /// This class is responsible for mapping CLR types to corresponding database types. 

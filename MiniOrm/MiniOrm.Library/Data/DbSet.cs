@@ -1,9 +1,9 @@
-﻿using MiniOrm.Attributes;
+﻿using MiniOrm.MiniOrm.Library.Attributes;
 using MiniOrm.Models;
 using Npgsql;
 using System.Reflection;
 
-namespace MiniOrm.Data;
+namespace MiniOrm.MiniOrm.Library.Data;
 
 /// <summary>
 /// This class represents a set of entities of a specific type, providing methods to query and manipulate the data.

@@ -1,4 +1,4 @@
-﻿namespace MiniOrm.Attributes;
+﻿namespace MiniOrm.MiniOrm.Library.Attributes;
 
 /// <summary>
 /// Specifies that a property must have a unique value within its context.

@@ -1,4 +1,4 @@
-﻿using MiniOrm.Data.Metadata;
+﻿using MiniOrm.MiniOrm.Library.Data.Metadata;
 
 namespace MiniOrm.Migrations.Diff_Engine.Operations;
 

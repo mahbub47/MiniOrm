@@ -1,21 +1,17 @@
-﻿
-using MiniOrm.Migrations.Diff_Engine.Operations;
-using MiniOrm.Migrations.Sql_Generator;
-using Npgsql;
-using System.Net.WebSockets;
+﻿using MiniOrm.Migrations.Diff_Engine.Operations;
 using System.Text;
 
-namespace MiniOrm.Migrations.Database;
+namespace MiniOrm.Migrations.MiniOrm.Migrations.Library.Database;
 
 public class SqlManager
 {
     private readonly SqlGenerator _generator;
     private readonly SqlExecutor _executor;
 
-    public SqlManager(string connectionString)
+    public SqlManager()
     {
         _generator = new SqlGenerator();
-        _executor = new SqlExecutor(connectionString);
+        _executor = new SqlExecutor();
     }
 
     // The GenerateSql method takes a list of migration operations and a StringBuilder to accumulate the generated SQL script.

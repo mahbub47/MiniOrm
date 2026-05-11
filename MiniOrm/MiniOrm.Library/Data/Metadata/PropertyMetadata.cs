@@ -1,7 +1,7 @@
-﻿using MiniOrm.Helper;
+﻿using MiniOrm.MiniOrm.Library.Helper;
 using System.Text.Json.Serialization;
 
-namespace MiniOrm.Data.Metadata;
+namespace MiniOrm.MiniOrm.Library.Data.Metadata;
 
 /// <summary>
 /// This class represents metadata information for a property of an entity. It includes details such as the property's name,

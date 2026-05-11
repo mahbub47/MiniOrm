@@ -1,8 +1,8 @@
-﻿using MiniOrm.Migrations.Database;
-using MiniOrm.Migrations.Diff_Engine;
+﻿using MiniOrm.Migrations.Diff_Engine;
+using MiniOrm.Migrations.MiniOrm.Migrations.Library.Database;
 using System.Text;
 
-namespace MiniOrm.Migrations.Commands;
+namespace MiniOrm.Migrations.MiniOrm.Migrations.Library.Commands;
 
 /// <summary>
 /// MigrationRunner is responsible for handling migration commands such as creating new migrations, 
@@ -16,13 +16,11 @@ public class MigrationRunner
 {
     private readonly SqlManager _sqlManager;
     private readonly DiffEngine _diffEngine;
-    private readonly string _connectionString;
     private readonly string _migrationDir;
     public MigrationRunner()
     {
-        _connectionString = "Host=localhost;Username=postgres;Password=MyPGServer;Database=miniOrm";
         _diffEngine = new DiffEngine();
-        _sqlManager = new SqlManager(_connectionString);
+        _sqlManager = new SqlManager();
 
         string projectRoot = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", ".."));
         _migrationDir = Path.Combine(projectRoot, "Migrations");
@@ -35,58 +33,55 @@ public class MigrationRunner
     /// <param name="args"></param>
     public async Task Run(string[] args)
     {
-        //if (args.Length == 0)
-        //{
-        //    Console.WriteLine("command not found run `dotnet run -- help` ");
-        //    return;
-        //}
-        //else if (args.Length == 1 && args[0] == "help")
-        //{
-        //    Help();
-        //    return;
-        //}
-        //else if (args.Length == 2)
-        //{
-        //    if (args[0] == "migrations" && args[1] == "apply")
-        //    {
-        //        await ApplyMigrations();
-        //    }
-        //    else if(args[0] == "migrations" && args[1] == "list")
-        //    {
-        //        await MigrationList();
-        //    }
-        //    else if (args[0] == "migrations" && args[1] == "rollback")
-        //    {
-        //        await MigrationRollback();
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("command not found run `dotnet run -- help` ");
-        //        return;
-        //    }
-        //}
-        //else if (args.Length == 3)
-        //{
-        //    if (args[0] == "migrations" && args[1] == "add")
-        //    {
-        //        var fileName = args[2];
-        //        AddMigration(fileName);
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("command not found run `dotnet run -- help` ");
-        //        return;
-        //    }
-        //}
-        //else
-        //{
-        //    Console.WriteLine("command not found run `dotnet run -- help` ");
-        //    return;
-        //}
-        //AddMigration("AddressColumnAdded");
-        //AddMigration("Test2");
-        await ApplyMigrations();
+        if (args.Length == 0)
+        {
+            Console.WriteLine("command not found run `dotnet run -- help` ");
+            return;
+        }
+        else if (args.Length == 1 && args[0] == "help")
+        {
+            Help();
+            return;
+        }
+        else if (args.Length == 2)
+        {
+            if (args[0] == "migrations" && args[1] == "apply")
+            {
+                await ApplyMigrations();
+            }
+            else if (args[0] == "migrations" && args[1] == "list")
+            {
+                await MigrationList();
+            }
+            else if (args[0] == "migrations" && args[1] == "rollback")
+            {
+                await MigrationRollback();
+            }
+            else
+            {
+                Console.WriteLine("command not found run `dotnet run -- help` ");
+                return;
+            }
+        }
+        else if (args.Length == 3)
+        {
+            if (args[0] == "migrations" && args[1] == "add")
+            {
+                var fileName = args[2];
+                AddMigration(fileName);
+                return;
+            }
+            else
+            {
+                Console.WriteLine("command not found run `dotnet run -- help` ");
+                return;
+            }
+        }
+        else
+        {
+            Console.WriteLine("command not found run `dotnet run -- help` ");
+            return;
+        }
     }
 
     // Displays the available migration commands and their usage instructions to the console.

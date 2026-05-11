@@ -1,4 +1,4 @@
-﻿using MiniOrm.Attributes;
+﻿using MiniOrm.MiniOrm.Library.Attributes;
 
 namespace MiniOrm.Models;
 

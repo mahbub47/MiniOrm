@@ -1,4 +1,4 @@
-﻿namespace MiniOrm.Attributes;
+﻿namespace MiniOrm.MiniOrm.Library.Attributes;
 
 /// <summary>
 /// Specifies the database table name that a class is mapped to when using an object-relational mapper.

@@ -1,7 +1,6 @@
-﻿
-using Npgsql;
+﻿using Npgsql;
 
-namespace MiniOrm.Migrations.Database;
+namespace MiniOrm.Migrations.MiniOrm.Migrations.Library.Database;
 
 /// <summary>
 /// This class is responsible for executing SQL commands against the database. It provides methods for executing non-query SQL commands,
@@ -10,7 +9,7 @@ public class SqlExecutor
 {
     private readonly string _connectionString;
 
-    public SqlExecutor(string connectionString) => _connectionString = connectionString;
+    public SqlExecutor() => _connectionString = Environment.GetEnvironmentVariable("MINIORM_CONN")!;
 
     public async Task ExecuteNonQueryAsync(string sql)
     {

@@ -1,4 +1,4 @@
-﻿namespace MiniOrm.Attributes;
+﻿namespace MiniOrm.MiniOrm.Library.Attributes;
 
 /// <summary>
 /// Indicates that a property is the primary key of the entity.

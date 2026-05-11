@@ -1,4 +1,4 @@
-﻿namespace MiniOrm.Attributes;
+﻿namespace MiniOrm.MiniOrm.Library.Attributes;
 
 /// <summary>
 /// Specifies the mapping between a class property and a database column for use with object-relational mapping

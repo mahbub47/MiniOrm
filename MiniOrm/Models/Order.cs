@@ -1,7 +1,4 @@
-﻿using MiniOrm.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MiniOrm.MiniOrm.Library.Attributes;
 
 namespace MiniOrm.Models;
 

@@ -1,8 +1,7 @@
-﻿
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace MiniOrm.Helper;
+namespace MiniOrm.MiniOrm.Library.Helper;
 
 /// <summary>
 /// This class is a custom JSON converter for the System.Type type. 

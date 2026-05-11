@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MiniOrm.Data.Metadata;
+﻿namespace MiniOrm.MiniOrm.Library.Data.Metadata;
 
 /// <summary>
 /// This class represents the metadata information for a model, which includes a collection of entities.

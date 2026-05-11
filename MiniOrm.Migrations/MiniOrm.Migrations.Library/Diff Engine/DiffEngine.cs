@@ -1,8 +1,7 @@
-﻿using MiniOrm.Data.Metadata;
-using MiniOrm.Helper;
-using MiniOrm.Migrations.Diff_Engine.Operations;
+﻿using MiniOrm.Migrations.Diff_Engine.Operations;
+using MiniOrm.MiniOrm.Library.Data.Metadata;
+using MiniOrm.MiniOrm.Library.Helper;
 using System.Text.Json;
-using System.Xml.Linq;
 
 namespace MiniOrm.Migrations.Diff_Engine;
 
