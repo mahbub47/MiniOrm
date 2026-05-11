@@ -139,4 +139,38 @@ public class DbSet<TEntity>(DbContext context) where TEntity : new()
 
         return entities;
     }
+
+    public async Task UpdateAsync(TEntity entity)
+    {
+        using var conn = context.GetConnection();
+
+        await conn.OpenAsync();
+
+        var metadata = context.GetEntityMetadata(typeof(TEntity));
+
+        var columns = metadata.Properties!.Where(p => p.IsPrimaryKey != true).ToList();
+
+        var setClause = string.Join(",", columns.Select(p => $"{p.Name} = @{p.Name}"));
+        var pkCol = metadata.Properties!.FirstOrDefault(p => p.IsPrimaryKey == true);
+
+        string sql = $"UPDATE {metadata.Name} SET {setClause} WHERE {pkCol!.Name} = @{pkCol!.Name}";
+
+        using var cmd = new NpgsqlCommand(sql, conn);
+
+        foreach (var col in columns)
+        {
+            var propInfo = typeof(TEntity).GetProperties()
+                .FirstOrDefault(p => p.GetCustomAttribute<ColumnAttribute>()!.Name == col.Name || p.Name == col.Name);
+
+            if (propInfo != null)
+            {
+                var value = propInfo.GetValue(entity);
+
+                cmd.Parameters.AddWithValue(col.Name!, value ?? DBNull.Value);
+            }
+        }
+
+        var result = await cmd.ExecuteNonQueryAsync();
+
+    }
 }

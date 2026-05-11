@@ -12,8 +12,13 @@ var context = new AppDbContext("Host=localhost;Username=postgres;Password=MyPGSe
 
 //var result = await context.Products!.InsertAsync(newProduct);
 
-//var result = await context.Products!.FindByIdAsync(1);
+var result = await context.Products!.FindByIdAsync(1);
+
+result.Name = "Test Product Updated";
 
 //Console.WriteLine($"Id: {result.Id}, ProductName: {result.Name}, Price: {result.Price}, Discount: {result.Discount}, IsAvailable: {result.InStock}");
 
 //var result = await context.Products!.GetAllAsync();
+
+await context.Products!.UpdateAsync(result);
+
