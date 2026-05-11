@@ -2,7 +2,6 @@
 using MiniOrm.Models;
 using Npgsql;
 using System.Reflection;
-using System.Text;
 
 namespace MiniOrm.Data;
 
@@ -21,6 +20,12 @@ public class DbSet<TEntity>(DbContext context) where TEntity : new()
         };
     }
 
+    /// <summary>
+    /// This method inserts a new entity into the database and returns the generated primary key value.
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public async Task<int> InsertAsync(TEntity entity)
     {
         using var conn = context.GetConnection();
@@ -57,6 +62,11 @@ public class DbSet<TEntity>(DbContext context) where TEntity : new()
         return Convert.ToInt32(result);
     }
 
+    /// <summary>
+    /// This method retrieves an entity from the database based on its primary key value. If no entity is found, it returns null.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<TEntity> FindByIdAsync(int id)
     {
         using var conn = context.GetConnection();
@@ -96,6 +106,10 @@ public class DbSet<TEntity>(DbContext context) where TEntity : new()
         return entity;
     }
 
+    /// <summary>
+    /// This method retrieves all entities of the specified type from the database and returns them as an enumerable collection.
+    /// </summary>
+    /// <returns></returns>
     public async Task<IEnumerable<TEntity>> GetAllAsync()
     {
         using var conn = context.GetConnection();
@@ -173,6 +187,11 @@ public class DbSet<TEntity>(DbContext context) where TEntity : new()
         await cmd.ExecuteNonQueryAsync();
     }
 
+    /// <summary>
+    /// This method deletes an entity from the database based on its primary key value. If no entity is found with the specified id, no action is taken.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task DeleteAsync(int id)
     {
         using var conn = context.GetConnection();

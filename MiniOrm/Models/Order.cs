@@ -20,7 +20,4 @@ public class Order
 
     [Column]
     public DateTime? OrderDate { get; set; }
-
-    [Column]
-    public string? ShippingAddress { get; set; }
 }

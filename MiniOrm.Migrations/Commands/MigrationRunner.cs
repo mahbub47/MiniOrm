@@ -35,55 +35,58 @@ public class MigrationRunner
     /// <param name="args"></param>
     public async Task Run(string[] args)
     {
-        if (args.Length == 0)
-        {
-            Console.WriteLine("command not found run `dotnet run -- help` ");
-            return;
-        }
-        else if (args.Length == 1 && args[0] == "help")
-        {
-            Help();
-            return;
-        }
-        else if (args.Length == 2)
-        {
-            if (args[0] == "migrations" && args[1] == "apply")
-            {
-                await ApplyMigrations();
-            }
-            else if(args[0] == "migrations" && args[1] == "list")
-            {
-                await MigrationList();
-            }
-            else if (args[0] == "migrations" && args[1] == "rollback")
-            {
-                await MigrationRollback();
-            }
-            else
-            {
-                Console.WriteLine("command not found run `dotnet run -- help` ");
-                return;
-            }
-        }
-        else if (args.Length == 3)
-        {
-            if (args[0] == "migrations" && args[1] == "add")
-            {
-                var fileName = args[2];
-                AddMigration(fileName);
-                return;
-            }
-            else
-            {
-                Console.WriteLine("command not found run `dotnet run -- help` ");
-                return;
-            }
-        }
-        else
-        {
-            Console.WriteLine("command not found run `dotnet run -- help` ");
-            return;
-        }
+        //if (args.Length == 0)
+        //{
+        //    Console.WriteLine("command not found run `dotnet run -- help` ");
+        //    return;
+        //}
+        //else if (args.Length == 1 && args[0] == "help")
+        //{
+        //    Help();
+        //    return;
+        //}
+        //else if (args.Length == 2)
+        //{
+        //    if (args[0] == "migrations" && args[1] == "apply")
+        //    {
+        //        await ApplyMigrations();
+        //    }
+        //    else if(args[0] == "migrations" && args[1] == "list")
+        //    {
+        //        await MigrationList();
+        //    }
+        //    else if (args[0] == "migrations" && args[1] == "rollback")
+        //    {
+        //        await MigrationRollback();
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("command not found run `dotnet run -- help` ");
+        //        return;
+        //    }
+        //}
+        //else if (args.Length == 3)
+        //{
+        //    if (args[0] == "migrations" && args[1] == "add")
+        //    {
+        //        var fileName = args[2];
+        //        AddMigration(fileName);
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("command not found run `dotnet run -- help` ");
+        //        return;
+        //    }
+        //}
+        //else
+        //{
+        //    Console.WriteLine("command not found run `dotnet run -- help` ");
+        //    return;
+        //}
+        //AddMigration("AddressColumnAdded");
+        //AddMigration("Test2");
+        await ApplyMigrations();
     }
 
     // Displays the available migration commands and their usage instructions to the console.
@@ -122,6 +125,8 @@ public class MigrationRunner
         _sqlManager.GenerateSql(downOperations, sb);
 
         File.WriteAllText(filePath, sb.ToString());
+
+        //_diffEngine.CreateMigrationSnapshot(_migrationDir, $"{timestamp}_{name}");
 
         _diffEngine.UpdateSnapshot();
 

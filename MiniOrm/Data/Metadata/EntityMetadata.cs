@@ -11,13 +11,13 @@ namespace MiniOrm.Data.Metadata;
 /// objects that describe each property of the entity.</remarks>
 public class EntityMetadata
 {
+    // This represents the name of the database table in the current dbcontext.
     public string? Name { get; set; }
 
+    // This represents the CLR type of the entity, which is used for mapping between the database and the application.
     [JsonConverter(typeof(TypeConverter))]
     public Type? EntityType { get; set; }
 
-    /// <summary>
-    /// Gets or sets the collection of property metadata associated with the current object.
-    /// </summary>
+    // This represents the list of columns in the database table in the current dbcontext.
     public List<PropertyMetadata>? Properties { get; set; } = new();
 }

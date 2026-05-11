@@ -22,4 +22,4 @@ var context = new AppDbContext("Host=localhost;Username=postgres;Password=MyPGSe
 
 //await context.Products!.UpdateAsync(result);
 
-await context.Products!.DeleteAsync(1);
+//await context.Products!.DeleteAsync(1);

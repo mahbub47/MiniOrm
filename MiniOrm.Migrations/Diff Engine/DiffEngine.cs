@@ -20,7 +20,10 @@ public class DiffEngine
         _snapshotDir = Path.Combine(projectRoot, "Snapshot");
         Directory.CreateDirectory(_snapshotDir);
     }
-    
+
+    /// <summary>
+    /// This method updates the snapshot of the model metadata by serializing the current model metadata to a JSON file.
+    /// </summary>
     public void UpdateSnapshot()
     {
         string fileName = "model_snapshot.json";
@@ -154,6 +157,18 @@ public class DiffEngine
                         OldDataType = oldCol.DatabaseType
                     });
                 }
+            }
+        }
+
+        foreach (var oldCol in old.Properties!)
+        {
+            if (!current.Properties.Any(e => e.Name == oldCol.Name))
+            {
+                upOperation.Add(new DropColumn
+                {
+                    TableName = current.Name,
+                    ColumnName = oldCol.Name,
+                });
             }
         }
     }

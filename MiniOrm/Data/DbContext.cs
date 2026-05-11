@@ -65,6 +65,11 @@ public class DbContext
         }
     }
 
+    /// <summary>
+    /// This method retrieves the metadata for a given entity type from the model. It searches through the list of
+    /// </summary>
+    /// <param name="entityType"></param>
+    /// <returns></returns>
     public EntityMetadata GetEntityMetadata(Type entityType)
     {
         return _model.Entities!.FirstOrDefault(e => e.EntityType == entityType)!;
