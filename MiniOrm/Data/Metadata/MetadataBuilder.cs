@@ -51,6 +51,7 @@ public class MetadataBuilder
         var entity = new EntityMetadata
         {
             Name = GetTableName(entityType),
+            EntityType = entityType,
         };
 
         var properties = entityType.GetProperties();

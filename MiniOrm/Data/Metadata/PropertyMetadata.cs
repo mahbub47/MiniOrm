@@ -31,7 +31,7 @@ public class PropertyMetadata
     /// IsPrimaryKey indicates whether the property is a primary key in the database. 
     /// This information is essential for identifying the unique identifier of an entity,
     /// </summary>
-    public bool IsPrimaryKey { get; set; }
+    public bool IsPrimaryKey { get; set; } = false;
 
     /// <summary>
     /// IsNullable indicates whether the property can accept null values. 

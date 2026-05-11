@@ -1,4 +1,7 @@
-﻿namespace MiniOrm.Data.Metadata;
+﻿using MiniOrm.Helper;
+using System.Text.Json.Serialization;
+
+namespace MiniOrm.Data.Metadata;
 
 /// <summary>
 /// Represents metadata information for an entity, including its name and associated properties.
@@ -9,6 +12,9 @@
 public class EntityMetadata
 {
     public string? Name { get; set; }
+
+    [JsonConverter(typeof(TypeConverter))]
+    public Type? EntityType { get; set; }
 
     /// <summary>
     /// Gets or sets the collection of property metadata associated with the current object.

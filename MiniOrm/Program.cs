@@ -1,7 +1,15 @@
 ﻿
+using MiniOrm.Models;
+
 var context = new AppDbContext("Host=localhost;Username=postgres;Password=MyPGServer;Database=miniOrm");
-var products = context.Products!.ToList();
-foreach (var product in products)
+
+var newProduct = new Product
 {
-    Console.WriteLine($"Name: {product.Name}");
-}
+    Name = "Test Product",
+    Price = 500m,
+    InStock = true
+};
+
+var result = await context.Products!.Insert(newProduct);
+
+Console.WriteLine($"Id: {result}");

@@ -24,9 +24,6 @@ public class DbContext
         _dbConnectionString = dbConnectionString;
         InitializeDbsets();
         _model = MetadataProvider.GetModel(GetType());
-
-        var obj = JsonSerializer.Serialize(_model);
-        Console.WriteLine(obj);
     }
 
     /// <summary>
@@ -124,5 +121,10 @@ public class DbContext
 
             property.SetValue(this, dbSetInstance);
         }
+    }
+
+    public EntityMetadata GetEntityMetadata(Type entityType)
+    {
+        return _model.Entities!.FirstOrDefault(e => e.EntityType == entityType)!;
     }
 }
