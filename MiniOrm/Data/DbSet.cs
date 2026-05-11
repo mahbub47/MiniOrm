@@ -170,7 +170,25 @@ public class DbSet<TEntity>(DbContext context) where TEntity : new()
             }
         }
 
-        var result = await cmd.ExecuteNonQueryAsync();
+        await cmd.ExecuteNonQueryAsync();
+    }
 
+    public async Task DeleteAsync(int id)
+    {
+        using var conn = context.GetConnection();
+
+        await conn.OpenAsync();
+
+        var metadata = context.GetEntityMetadata(typeof(TEntity));
+
+        var pkCol = metadata.Properties!.FirstOrDefault(p => p.IsPrimaryKey == true);
+
+        string sql = $"DELETE FROM {metadata.Name} WHERE {pkCol!.Name} = @{pkCol!.Name}";
+
+        using var cmd = new NpgsqlCommand(sql, conn);
+
+        cmd.Parameters.AddWithValue($"@{pkCol.Name}", id);
+
+        await cmd.ExecuteNonQueryAsync();
     }
 }
