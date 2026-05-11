@@ -52,7 +52,6 @@ public class DbSet<TEntity>(DbContext context) where TEntity : new()
             if(propInfo != null)
             {
                 var value = propInfo.GetValue(entity);
-
                 cmd.Parameters.AddWithValue(col.Name!, value ?? DBNull.Value);
             }
         }
@@ -99,7 +98,8 @@ public class DbSet<TEntity>(DbContext context) where TEntity : new()
             else
             {
                 var value = reader.GetValue(ordinal);
-                propInfo!.SetValue(entity, Convert.ChangeType(value, col.ClrType!));
+                Type target = Nullable.GetUnderlyingType(col.ClrType!) ?? col.ClrType!;
+                propInfo!.SetValue(entity, Convert.ChangeType(value, target));
             }
         }
 
@@ -144,7 +144,8 @@ public class DbSet<TEntity>(DbContext context) where TEntity : new()
                 else
                 {
                     var value = reader.GetValue(ordinal);
-                    propInfo!.SetValue(entity, Convert.ChangeType(value, col.ClrType!));
+                    Type target = Nullable.GetUnderlyingType(col.ClrType!) ?? col.ClrType!;
+                    propInfo!.SetValue(entity, Convert.ChangeType(value, target));
                 }
             }
 
