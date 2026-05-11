@@ -11,7 +11,7 @@ namespace MiniOrm.Data;
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
 /// <param name="context"></param>
-public class DbSet<TEntity>(DbContext context) where TEntity : class
+public class DbSet<TEntity>(DbContext context) where TEntity : new()
 {
     public IEnumerable<Product> ToList()
     {
@@ -21,7 +21,7 @@ public class DbSet<TEntity>(DbContext context) where TEntity : class
         };
     }
 
-    public async Task<int> Insert(TEntity entity)
+    public async Task<int> InsertAsync(TEntity entity)
     {
         using var conn = context.GetConnection();
 
@@ -55,5 +55,44 @@ public class DbSet<TEntity>(DbContext context) where TEntity : class
         var result = await cmd.ExecuteScalarAsync() ?? throw new InvalidOperationException("Id is not returned");
 
         return Convert.ToInt32(result);
+    }
+
+    public async Task<TEntity> FindByIdAsync(int id)
+    {
+        using var conn = context.GetConnection();
+
+        await conn.OpenAsync();
+
+        var metadata = context.GetEntityMetadata(typeof(TEntity));
+        var pkCol = metadata.Properties!.FirstOrDefault(p => p.IsPrimaryKey == true);
+
+        string sql = $"SELECT * FROM {metadata.Name} WHERE {pkCol!.Name} = @id LIMIT 1";
+        using var cmd = new NpgsqlCommand(sql, conn);
+        cmd.Parameters.AddWithValue("id", id);
+
+        var reader = await cmd.ExecuteReaderAsync() ?? throw new InvalidOperationException(sql);
+        if (!reader.Read()) return default!;
+
+        var entity = new TEntity();
+
+        foreach(var col in metadata.Properties!)
+        {
+            var propInfo = typeof(TEntity).GetProperties()
+                .FirstOrDefault(p => p.GetCustomAttribute<ColumnAttribute>()!.Name == col.Name || p.Name == col.Name);
+
+            var ordinal = reader.GetOrdinal(col.Name!);
+
+            if (reader.IsDBNull(ordinal))
+            {
+                propInfo!.SetValue(entity, null);
+            }
+            else
+            {
+                var value = reader.GetValue(ordinal);
+                propInfo!.SetValue(entity, Convert.ChangeType(value, col.ClrType!));
+            }
+        }
+
+        return entity;
     }
 }

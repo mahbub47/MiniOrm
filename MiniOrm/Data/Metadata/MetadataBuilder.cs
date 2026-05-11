@@ -62,7 +62,7 @@ public class MetadataBuilder
             var Property = new PropertyMetadata
             {
                 Name = GetColumnName(property),
-                ClrType = property.PropertyType.GetType(),
+                ClrType = property.PropertyType,
                 DatabaseType = databaseType.DatabaseType,
                 IsPrimaryKey = CheckPrimaryKey(property),
                 Nullable = databaseType.Nullable

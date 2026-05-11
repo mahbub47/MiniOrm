@@ -3,13 +3,15 @@ using MiniOrm.Models;
 
 var context = new AppDbContext("Host=localhost;Username=postgres;Password=MyPGServer;Database=miniOrm");
 
-var newProduct = new Product
-{
-    Name = "Test Product",
-    Price = 500m,
-    InStock = true
-};
+//var newProduct = new Product
+//{
+//    Name = "Test Product",
+//    Price = 500m,
+//    InStock = true
+//};
 
-var result = await context.Products!.Insert(newProduct);
+//var result = await context.Products!.InsertAsync(newProduct);
 
-Console.WriteLine($"Id: {result}");
+//var result = await context.Products!.FindByIdAsync(1);
+
+//Console.WriteLine($"Id: {result.Id}, ProductName: {result.Name}, Price: {result.Price}, Discount: {result.Discount}, IsAvailable: {result.InStock}");
