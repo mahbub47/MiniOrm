@@ -1,7 +1,25 @@
 ﻿
+using MiniOrm.Models;
+
 var context = new AppDbContext("Host=localhost;Username=postgres;Password=MyPGServer;Database=miniOrm");
-var products = context.Products!.ToList();
-foreach (var product in products)
-{
-    Console.WriteLine($"Name: {product.Name}");
-}
+
+//var newProduct = new Product
+//{
+//    Name = "Test Product",
+//    Price = 500m,
+//    InStock = true
+//};
+
+//var result = await context.Products!.InsertAsync(newProduct);
+
+//var result = await context.Products!.FindByIdAsync(1);
+
+//result.Name = "Test Product Updated";
+
+//Console.WriteLine($"Id: {result.Id}, ProductName: {result.Name}, Price: {result.Price}, Discount: {result.Discount}, IsAvailable: {result.InStock}");
+
+//var result = await context.Products!.GetAllAsync();
+
+//await context.Products!.UpdateAsync(result);
+
+//await context.Products!.DeleteAsync(1);

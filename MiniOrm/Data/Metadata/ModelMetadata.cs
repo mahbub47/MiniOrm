@@ -9,8 +9,6 @@ namespace MiniOrm.Data.Metadata;
 /// </summary>
 public class ModelMetadata
 {
-    /// <summary>
-    /// List of entities that are part of the model. Each entity contains metadata about its properties and structure.
-    /// </summary>
+    // It represents all the database tables in the model.
     public List<EntityMetadata>? Entities { get; set; } = new();
 }
