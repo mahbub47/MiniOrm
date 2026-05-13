@@ -58,7 +58,7 @@ public class MetadataBuilder
 
         foreach ( var property in properties)
         {
-            var databaseType = new TypeMapper().Map(property.PropertyType);
+            var databaseType = new TypeMapper().Map(property);
             var Property = new PropertyMetadata
             {
                 Name = GetColumnName(property),

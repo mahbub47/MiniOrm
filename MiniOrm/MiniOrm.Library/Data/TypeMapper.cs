@@ -1,4 +1,6 @@
-﻿namespace MiniOrm.MiniOrm.Library.Data;
+﻿using System.Reflection;
+
+namespace MiniOrm.MiniOrm.Library.Data;
 
 /// <summary>
 /// This class is responsible for mapping CLR types to corresponding database types. 
@@ -7,14 +9,20 @@
 /// </summary>
 public class TypeMapper
 {
-    public DataBaseType Map(Type clrType)
+    /// <summary>
+    /// This method takes a PropertyInfo object representing a property of an entity class and maps its CLR type to a corresponding database type.
+    /// </summary>
+    /// <param name="property"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    public DataBaseType Map(PropertyInfo property)
     {
-        if (clrType == null) return null!;
+        Type clrType = property.PropertyType;
 
-        bool isNullable = !clrType.IsValueType || Nullable.GetUnderlyingType(clrType) != null;
-
+        //Get the Core Type (e.g., int from int?)
         Type coreType = Nullable.GetUnderlyingType(clrType) ?? clrType;
 
+        //Map the Core Type to SQL
         string sqlTypeName = coreType switch
         {
             var t when t == typeof(int) => "INT",
@@ -26,12 +34,33 @@ public class TypeMapper
             var t when t == typeof(DateTime) => "TIMESTAMP",
             var t when t == typeof(Guid) => "UUID",
             var t when t == typeof(string) => "TEXT",
-            _ => throw new ArgumentException("Unknown Type to map")
+            _ => throw new ArgumentException($"Type {clrType.Name} is not supported.")
         };
 
+        //Nullability Check
+        bool isNullable = IsPropertyNullable(property);
         string nullability = isNullable ? "NULL" : "NOT NULL";
 
         return new DataBaseType(sqlTypeName, nullability);
+    }
+
+    /// <summary>
+    /// This method checks if a given property is nullable. It handles both value types (like int, DateTime) and reference types (like string, classes).
+    /// </summary>
+    /// <param name="property"></param>
+    /// <returns></returns>
+    private bool IsPropertyNullable(PropertyInfo property)
+    {
+        // For Value Types (int, DateTime, etc.)
+        if (property.PropertyType.IsValueType)
+        {
+            return Nullable.GetUnderlyingType(property.PropertyType) != null;
+        }
+
+        // For Reference Types (string, classes)
+        var context = new NullabilityInfoContext();
+        var info = context.Create(property);
+        return info.WriteState == NullabilityState.Nullable;
     }
 }
 
