@@ -47,7 +47,7 @@ public class DbSet<TEntity>(DbContext context) where TEntity : new()
         foreach ( var col in columns)
         {
             var propInfo = typeof(TEntity).GetProperties()
-                .FirstOrDefault(p => p.GetCustomAttribute<ColumnAttribute>()!.Name == col.Name || p.Name == col.Name);
+                .FirstOrDefault(p => p.GetCustomAttribute<ColumnAttribute>()?.Name == col.Name || p.Name == col.Name);
 
             if(propInfo != null)
             {
@@ -87,7 +87,7 @@ public class DbSet<TEntity>(DbContext context) where TEntity : new()
         foreach(var col in metadata.Properties!)
         {
             var propInfo = typeof(TEntity).GetProperties()
-                .FirstOrDefault(p => p.GetCustomAttribute<ColumnAttribute>()!.Name == col.Name || p.Name == col.Name);
+                .FirstOrDefault(p => p.GetCustomAttribute<ColumnAttribute>()?.Name == col.Name || p.Name == col.Name);
 
             var ordinal = reader.GetOrdinal(col.Name!);
 
@@ -133,7 +133,7 @@ public class DbSet<TEntity>(DbContext context) where TEntity : new()
             foreach (var col in metadata.Properties!)
             {
                 var propInfo = typeof(TEntity).GetProperties()
-                    .FirstOrDefault(p => p.GetCustomAttribute<ColumnAttribute>()!.Name == col.Name || p.Name == col.Name);
+                    .FirstOrDefault(p => p.GetCustomAttribute<ColumnAttribute>()?.Name == col.Name || p.Name == col.Name);
 
                 var ordinal = reader.GetOrdinal(col.Name!);
 
@@ -175,7 +175,7 @@ public class DbSet<TEntity>(DbContext context) where TEntity : new()
         foreach (var col in columns)
         {
             var propInfo = typeof(TEntity).GetProperties()
-                .FirstOrDefault(p => p.GetCustomAttribute<ColumnAttribute>()!.Name == col.Name || p.Name == col.Name);
+                .FirstOrDefault(p => p.GetCustomAttribute<ColumnAttribute>()?.Name == col.Name || p.Name == col.Name);
 
             if (propInfo != null)
             {
